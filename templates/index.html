@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>$(document).ready(function(){
+  $("form").submit(function(){
+    myFunction();
+  });
+});
+    </script>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <title>Flipkart Customer Details</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Flipkart Product Scrapper</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+            </ul>
+            <form class="d-flex" action="/search" method="POST">
+                <input class="form-control me-5" type="search" placeholder="Enter Keywords" aria-label="Search"
+                       name="search" required>
+                <button class="btn btn-outline-success btn-lg" type="submit">
+                    <span class="sr-only">Search</span>
+                    <span class="spinner-border spinner-border-lg" role="status" aria-hidden="true" id="spin-it"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!--<div class="spinner-border" role="status" id="spin-it">-->
+<!--  <span class="visually-hidden">Loading...</span>-->
+<!--</div>-->
+
+<div class="container py-5">
+    {% if response %}
+    <h2 class="h-2">Found {{num_of_results}} Result(s)</h2>
+
+    <table class="table table-striped table-hover table-bordered border-primary table-responsive">
+        <thead>
+        <tr>
+            <th>Item No.</th>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Comment Head</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for review in response %}
+        <tr>
+            <td>{{review["count"]}}</td>
+            <td>{{review['name']}}</td>
+            <td>{{review['rating']}}</td>
+            <td>{{review['commentHead']}}</td>
+            <td>{{review['description']}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h2 class="h-3">No Result(s) Yet! Search something.</h2>
+    {% endif %}
+</div>
+<center>
+    <nav class="navbar fixed-bottom navbar-light bg-light">
+      <a class="navbar-brand" href="#" >Made by Biswajit</a>
+    </nav>
+</center>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+<script>
+
+document.getElementById("spin-it").style.display = "none";
+function myFunction()
+{
+    document.getElementById("spin-it").style.display = "block";
+}
+
+</script>
+</body>
+</html>
